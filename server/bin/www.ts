@@ -2,14 +2,11 @@ import * as http from 'http';
 import { SERVER_PORT } from '../config';
 import app from '../app';
 
-
-
 /**
  * ポートの設定.
  */
 const port = normalizePort(process.env.PORT || SERVER_PORT);
 app.set('port', port);
-
 
 /**
  * HTTPサーバ生成.

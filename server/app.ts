@@ -29,7 +29,6 @@ class App {
   private routes(): void {
     // 静的資産へのルーティング
     this.express.use(express.static(path.join(__dirname, 'public')));
-
     this.express.use('/api/messages', messageRouter);
 
     // その他のリクエストはindexファイルにルーティング
