@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
-
 const Schema = mongoose.Schema;
+
 const Review = Schema({
     rvname: String,//レビューの名前（被りあり）
     hostid: {type:Schema.Types.ObjectId, index:true},//obj_idから主催者のデータを拾う
