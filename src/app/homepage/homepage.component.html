@@ -1,0 +1,26 @@
+<header>
+    <div class="gnav-btn" [class.is-open]="nav_flag" (click)="nav_state()">
+        <div class="icon-animation">
+        <span class="top"></span>
+        <span class="middle"></span>
+        <span class="bottom"></span>
+        </div>
+    </div>
+    <nav class="global">
+        <ul class="gnav" [class.on]="nav_flag">
+            <li><a href="">ホーム</a></li>
+            <li><a href="">レビュー</a></li>
+            <li><a href="">新規登録</a></li>
+            <li>
+                <p>ログイン</p>
+                <form>
+                    <input type="text" name="id" id="">
+                    <input type="text" name="pass" id="">
+                    <input type="submit">
+                </form>
+            </li>
+        </ul>
+    </nav>
+</header>
+<img src="./assets/main.jpg" alt="メイン画像" >
+<!-- <div class="modal" [class.on]="nav_flag"></div> -->
