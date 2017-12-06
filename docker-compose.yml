@@ -6,6 +6,9 @@ services:
       - db
     ports:
       - '3000:3000'
+    volumes:
+      - "./dist/server:/usr/src/app"
+      # アプリ資産をコピー
     links:
       - db:mongo
     environment:
