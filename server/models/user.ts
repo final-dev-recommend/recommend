@@ -13,7 +13,7 @@ const User = Schema({
     place: String,//自分の住んでいる場所
     hashpass: {type:String, index:true},//ハッシュ化されたパスワード
     salt: {type:String, index:true},//お塩
-    prop: {type:String, index:true},//プロフィール用画像のURL予定
+    prop: {type:String, index:true},//プロフィール用画像のURL
     url_pass: {type:String, index:true},//認証用の一時url(regiser)
     url_pass2: {type:String, index:true},//認証用の一時url(passreset)
     url_pass3: {type:String, index:true},//認証用の一時url(email_change)

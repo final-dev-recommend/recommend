@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-
 const Review = Schema({
     rvname: String,//レビューの名前（被りあり）
     hostid: {type:Schema.Types.ObjectId, index:true},//obj_idから主催者のデータを拾う
@@ -12,11 +11,11 @@ const Review = Schema({
     abaid: [{type:Schema.Types.ObjectId, index:true}],//ベストアンサーに選ばれた回答者のIDを記録
     tag: [String],//この中に言語も記述してもらう(ニコ動のタグみたいなもの)
     fav:[{type:Schema.Types.ObjectId, index:true}],//ファボした人のオブジェクトIDを格納
-    cont: [{type: Schema.Types.ObjectId, ref: 'ReviewCom'}]
+    com: [{type: Schema.Types.ObjectId, ref: 'ReviewCom'}]
 },{collection: 'review'});
 
 const ReviewCom = Schema({
-    //reviewcomの_idはforumのIDと同じになる
+    //reviewcomの_idはreviewのIDと同じになる
     mfo: {type:Schema.Types.ObjectId, ref: 'Review', index:true},
     _conid: {type:Schema.Types.ObjectId, index:true},//コンテンツID
     com: {type:Schema.Types.ObjectId, index:true},//コメンターID
