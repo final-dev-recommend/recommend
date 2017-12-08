@@ -4,7 +4,6 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { MessageService } from './message/message.service';
 import { HomepageComponent } from "./homepage/homepage.component";
 
 @NgModule({
@@ -17,7 +16,6 @@ import { HomepageComponent } from "./homepage/homepage.component";
     HttpModule,
     FormsModule
   ],
-  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

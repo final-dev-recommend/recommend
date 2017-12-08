@@ -7,7 +7,7 @@ const Review = Schema({
     host: String,//ユーザーのIDを格納
     count: Number,//アクセスされた回数
     uday: {type:Date, index:true},//アップロードした日
-    review: String,//レビュワーが入力(質問内容)
+    review: String,//レビュワーが入力(レビュー内容)
     abaid: [{type:Schema.Types.ObjectId, index:true}],//ベストアンサーに選ばれた回答者のIDを記録
     tag: [String],//この中に言語も記述してもらう(ニコ動のタグみたいなもの)
     fav:[{type:Schema.Types.ObjectId, index:true}],//ファボした人のオブジェクトIDを格納
