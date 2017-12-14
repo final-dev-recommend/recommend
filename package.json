@@ -17,7 +17,9 @@
     "core-js": "^2.4.1",
     "express-session": "^1.15.6",
     "mongoose": "^4.13.6",
+    "nodemailer": "^4.4.1",
     "rxjs": "^5.5.2",
+    "xoauth2": "^1.2.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
@@ -36,6 +38,8 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "logger": "0.0.1",
+    "morgan": "^1.9.0",
     "nodemon": "^1.12.5",
     "npm-run-all": "^4.1.2",
     "protractor": "~5.1.2",
@@ -65,5 +69,17 @@
     "webdriver:start": "webdriver-manager start",
     "protractor": "protractor protractor.conf.js",
     "lint": "ng lint"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.1.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/final-dev-recommend/recommend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/final-dev-recommend/recommend/issues"
+  },
+  "homepage": "https://github.com/final-dev-recommend/recommend#readme"
 }
