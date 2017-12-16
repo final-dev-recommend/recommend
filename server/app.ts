@@ -1,21 +1,27 @@
 import * as express from 'express';
-import * as session from 'express-session';
 import * as path from 'path';
+import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
+import * as session from 'express-session';
+import * as connect from 'connect';
 import * as mongoose from 'mongoose';
 
-var logger = require('morgan');
-
-import { MONGO_URL } from './config';
+import { perfectHash, MONGO_URL_REVIEW, MONGO_URL_USER } from './config';
 import { MONGO_URL_SESSION } from './config';
 
-import { registerRouter } from './routes/register';
-
-var ConnectMongoDB = require('connect-mongo')(session);
-let store = new ConnectMongoDB({ //セッション管理用DB接続設定
+const ConnectMongoDB = require('connect-mongo')(session);
+const store = new ConnectMongoDB({ //セッション管理用DB接続設定
   url: MONGO_URL_SESSION,
   ttl: 60 * 60 //1hour
 });
+
+import * as passport from 'passport';
+const LocalStrategy = require('passport-local').Strategy;
+
+import { User } from './models/user';
+
+import { registerRouter } from './routes/register/register';
+import { registerRouter_end } from './routes/register/register_end';
 
 class App {
   public express: express.Application;
@@ -27,28 +33,61 @@ class App {
   }
 
   private middleware(): void {
+    this.express.set('trust proxy', 1);// プロキシで通信をする
+
+    // 接続する MongoDB の設定
+    mongoose.Promise = global.Promise;
+    mongoose.connect(process.env.MONGO_URL_USER || MONGO_URL_USER || MONGO_URL_REVIEW, {
+      useMongoClient: true,
+    });
+    process.on('SIGINT', () => { 
+      mongoose.disconnect(); 
+    });
+
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
     this.express.use(logger('dev'));//ログ用
-    let secure = true;
     this.express.use(session({
-        secret: 'IOU-KITTY',
-        resave: false,
-        saveUnitialized: true,
-        cookie: {
-          secure: secure,
-          httpOnly: true,
-          maxAge: 60 * 60 * 1000
-        }, //公開時はtrue
+        secret: 'iou kitty',
         store: store,
-        proxy: true
+        proxy: false,
+        resave: true,
+        saveUninitialized: false,
+        cookie: {
+          httpOnly: true,
+          secure: false,
+          maxAge: 60 * 60 * 1000
+        }
     }));
-    // 接続する MongoDB の設定
-    mongoose.Promise = global.Promise;
-    mongoose.connect(process.env.MONGO_URL || MONGO_URL, {
-      useMongoClient: true,
-    });
-    process.on('SIGINT', function() { mongoose.disconnect(); });
+    // 認証
+    passport.use(new LocalStrategy({
+      usernameField: 'name',
+      passwordField: 'password',
+      passReqToCallback: true
+    },
+    (req, name, password, done) => {
+      process.nextTick(() => {
+          User.findOne({ $or: [{email:name},{uid:name}] }, (err, account) => {
+              if (err) return done(err);
+              if (!account) {
+                  req.flash('error', 'ユーザーが見つかりませんでした。');
+                  req.flash('input_id', name);
+                  req.flash('input_password', password);
+                  return done(null, false);
+              }
+              let hashedPassword = perfectHash(password);
+              if (account.password != hashedPassword
+                  && account.password != password) {
+                  req.flash('error', 'パスワードが間違っています。');
+                  req.flash('input_id', name);
+                  req.flash('input_password', password);
+                  return done(null, false);
+              }
+              return done(null, account);
+          });
+      })
+    }
+    ));
   }
 
   private routes(): void {
@@ -56,6 +95,7 @@ class App {
     this.express.use(express.static(path.join(__dirname, 'public')));
     // this.express.use('/api/messages', messageRouter);
     this.express.use('/api/register',  registerRouter);
+    this.express.use('/api/register_end', registerRouter_end);
 
     //ミドルウェアを使いつくしたので404を生成 
     this.express.use((err, req, res, next) => {

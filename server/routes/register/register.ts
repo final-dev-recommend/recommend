@@ -1,23 +1,18 @@
 import * as http from 'http'; 
+import * as crypto  from  'crypto';
 import { Router, Response } from 'express';
-import { User } from '../models/user';
 
 const nodemailer = require('nodemailer');
 
-import { G_USER, G_PASS } from '../config';
-import { CLIENT_ID } from '../config';
-import { CLIENT_SEC } from '../config';
-import { REFRESH_TOKEN } from '../config';
+import { G_USER, G_PASS } from '../../config';
+import { CLIENT_ID } from '../../config';
+import { CLIENT_SEC } from '../../config';
+import { REFRESH_TOKEN } from '../../config';
 
-import { REGI_SUB } from '../config';
-import { REGI_HTML } from '../config';
-import { OAuth2 } from '../config';//メール送信時の認証
-
-import { generate } from 'rxjs/observable/generate';
-import { request } from 'http';
+import { REGI_SUB } from '../../config';
+// import { REGI_HTML } from '../config';
 
 const registerRouter: Router = Router();
-
 registerRouter.get('/' , (req, res, next)  => {
     // let email = req.body.email;
     let email = 'kd1188729@st.kobedenshi.ac.jp';
@@ -25,9 +20,9 @@ registerRouter.get('/' , (req, res, next)  => {
       from: 'Recommend運営<Recommed911@gmail.com>',
       to: email,
       subject: REGI_SUB,
-      html: REGI_HTML
+      html: 'a' 
     };
-    var transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
         secure: false,
@@ -36,14 +31,13 @@ registerRouter.get('/' , (req, res, next)  => {
             pass: G_PASS
         }
     });
-    transporter.sendMail(mailOptions, (err, resp)  => { //メールの送信
+    transporter.sendMail(mailOptions, (err, resp, req, res)  => { //メールの送信
         if (err) { //送信に失敗したとき
             //console.log('');
             hadSendmailError(err, req, res, resp);
             transporter.close(); //SMTPの切断
         }
          transporter.close(); //SMTPの切断
-         return;
     });
 });
 
