@@ -1,0 +1,29 @@
+  <mat-toolbar color="primary">
+      <div class="one">
+          <button mat-icon-button (click)="snav.toggle()" class="menu-button"><mat-icon class="menu">menu</mat-icon></button>
+        </div>
+    <div class="two">
+      <span><mat-icon svgIcon="logo" class="logo">icon</mat-icon></span>
+      <span><mat-icon svgIcon="title" class="title">recommend</mat-icon></span>
+    </div>
+    <div class="three"></div>
+  </mat-toolbar>
+  <mat-sidenav-container class="container">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+          <a routerLink="." href="#"><p>ホーム</p></a>
+          <a routerLink="." href="#"><p>マイページ</p></a>
+          <a routerLink="." href="#"><p>レビュー</p></a>
+          <a routerLink="." href="#"><p>レビュー投稿</p></a>
+          <a routerLink="." href="#"><p>お問い合わせ</p></a>
+          <a routerLink="." href="#"><p>設定</p></a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <p *ngFor="let content of fillerContent">{{content}}</p>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+<div *ngIf="!shouldRun">Please open on Stackblitz to see result</div>

@@ -1,21 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
-
-import { AppComponent } from './app.component';
-import { HomepageComponent } from "./homepage/homepage.component";
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from "../shared/shared.module";
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomepageComponent
-  ],
   imports: [
-    BrowserModule,
-    HttpModule,
-    FormsModule
+    CommonModule,
+    SharedModule
   ],
-  bootstrap: [AppComponent]
+  exports: [
+    HeaderComponent
+  ],
+  declarations: [
+    HeaderComponent
+  ]
 })
-export class AppModule { }
+export class CoreModule {
+
+    constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
+      if (parentModule) {
+        throw new Error(
+          'CoreModule is already loaded. Import it in the AppModule only');
+      }
+    }
+
+ }

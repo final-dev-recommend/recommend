@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './recommend.component.html',
   styles: [``]
 })
-export class AppComponent {
+export class RecommendComponent {
   constructor() {
   }
 }
