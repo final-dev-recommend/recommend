@@ -6,8 +6,7 @@ import * as session from 'express-session';
 import * as connect from 'connect';
 import * as mongoose from 'mongoose';
 
-import { perfectHash, MONGO_URL_REVIEW, MONGO_URL_USER } from './config';
-import { MONGO_URL_SESSION } from './config';
+import { getPhash, getHash, getRand, MONGO_URL_REVIEW, MONGO_URL_USER, MONGO_URL_SESSION } from './config';
 
 const ConnectMongoDB = require('connect-mongo')(session);
 const store = new ConnectMongoDB({ //セッション管理用DB接続設定
@@ -18,10 +17,11 @@ const store = new ConnectMongoDB({ //セッション管理用DB接続設定
 import * as passport from 'passport';
 const LocalStrategy = require('passport-local').Strategy;
 
-import { User } from './models/user';
+import * as Users   from './models/user';
 
 import { registerRouter } from './routes/register/register';
 import { registerRouter_end } from './routes/register/register_end';
+import { loginRouter } from './routes/login/login';
 
 class App {
   public express: express.Application;
@@ -44,11 +44,12 @@ class App {
       mongoose.disconnect(); 
     });
 
+    this.express.use(passport.initialize());
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
     this.express.use(logger('dev'));//ログ用
     this.express.use(session({
-        secret: 'iou kitty',
+        secret: 'ioukitty',
         store: store,
         proxy: false,
         resave: true,
@@ -59,43 +60,43 @@ class App {
           maxAge: 60 * 60 * 1000
         }
     }));
-    // 認証
+    // ログイン認証
     passport.use(new LocalStrategy({
       usernameField: 'name',
       passwordField: 'password',
       passReqToCallback: true
-    },
-    (req, name, password, done) => {
+    }, (req, name, password, done) => {
       process.nextTick(() => {
-          User.findOne({ $or: [{email:name},{uid:name}] }, (err, account) => {
-              if (err) return done(err);
-              if (!account) {
-                  req.flash('error', 'ユーザーが見つかりませんでした。');
-                  req.flash('input_id', name);
-                  req.flash('input_password', password);
+          Users.findOne({$or:[{email:name},{uid:name}]}, (err, account) => {
+              if (err) return done(console.log(err));
+              if (!account) {//アカウントが見つからない
+                console.log("ユーザ名かパスワードが間違っています。");
                   return done(null, false);
               }
-              let hashedPassword = perfectHash(password);
-              if (account.password != hashedPassword
-                  && account.password != password) {
-                  req.flash('error', 'パスワードが間違っています。');
-                  req.flash('input_id', name);
-                  req.flash('input_password', password);
+              //let hashedPassword = perfectHash(password);//本番用
+              let hashedPassword = req.body.password;//テスト用
+              if (account.hashpass != hashedPassword) { //パスワードが一致しない
+                console.log("ユーザ名かパスワードが間違っています。");
                   return done(null, false);
               }
+              if(account.ac_st != true){//アカウントの登録が済んでいない
+                 console.log("アカウントの作成が済んでいません。");
+                 return done(null, false);
+              }
+              req.session.uid = account.uid;
+              req.session.save();
               return done(null, account);
           });
       })
-    }
-    ));
+    }));
   }
 
   private routes(): void {
     // 静的資産へのルーティング
     this.express.use(express.static(path.join(__dirname, 'public')));
-    // this.express.use('/api/messages', messageRouter);
     this.express.use('/api/register',  registerRouter);
     this.express.use('/api/register_end', registerRouter_end);
+    this.express.use('/api/login', loginRouter);
 
     //ミドルウェアを使いつくしたので404を生成 
     this.express.use((err, req, res, next) => {

@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
-const Review = Schema({
+let Schema = mongoose.Schema;
+let Review = Schema({
     rvname: String,//レビューの名前（被りあり）
     hostid: {type:Schema.Types.ObjectId, index:true},//obj_idから主催者のデータを拾う
     host: String,//ユーザーのIDを格納
@@ -14,7 +14,7 @@ const Review = Schema({
     com: [{type: Schema.Types.ObjectId, ref: 'ReviewCom'}]
 },{collection: 'review'});
 
-const ReviewCom = Schema({
+let ReviewCom = Schema({
     //reviewcomの_idはreviewのIDと同じになる
     mfo: {type:Schema.Types.ObjectId, ref: 'Review', index:true},
     _conid: {type:Schema.Types.ObjectId, index:true},//コンテンツID
@@ -26,5 +26,10 @@ const ReviewCom = Schema({
     text: String//レビューに対してコメンターが入力(回答内容)
 },{collection:'reviewcom'});
 
-export { Review };
-export { ReviewCom };
+mongoose.Promise = global.Promise;
+let Review_model = mongoose.model("Review", Review);
+let ReviewCom_model = mongoose.model("ReviewCom", ReviewCom);
+
+let Review_Obj = [Review_model, ReviewCom_model];
+
+export = Review_Obj;

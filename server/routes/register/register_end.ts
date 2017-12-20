@@ -1,10 +1,8 @@
 import * as http from 'http'; 
-import * as crypto  from  'crypto';
 import { Router, Response } from 'express';
-import { User } from '../../models/user';
+import * as Users  from '../../models/user';
 
 const nodemailer = require('nodemailer');
-const hash = crypto.createHash('sha256');
 
 import { G_USER, G_PASS } from '../../config';
 import { CLIENT_ID } from '../../config';

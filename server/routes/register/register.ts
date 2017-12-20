@@ -4,7 +4,7 @@ import { Router, Response } from 'express';
 
 const nodemailer = require('nodemailer');
 
-import { G_USER, G_PASS } from '../../config';
+import { G_USER, G_PASS, getHash , getRand} from '../../config';
 import { CLIENT_ID } from '../../config';
 import { CLIENT_SEC } from '../../config';
 import { REFRESH_TOKEN } from '../../config';
@@ -13,14 +13,17 @@ import { REGI_SUB } from '../../config';
 // import { REGI_HTML } from '../config';
 
 const registerRouter: Router = Router();
-registerRouter.get('/' , (req, res, next)  => {
-    // let email = req.body.email;
-    let email = 'kd1188729@st.kobedenshi.ac.jp';
+registerRouter.post('/' , (req, res, next)  => {
+    let email = req.body.email;
+    let rand = getRand(10);
+    console.log(rand);
+    let onetime_Url = getHash(rand);
+
     let mailOptions = { //メールの送信内容
       from: 'Recommend運営<Recommed911@gmail.com>',
       to: email,
       subject: REGI_SUB,
-      html: 'a' 
+      html:  "Recommendへようこそ！\nURLをクリックしてください。\n"
     };
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -39,6 +42,10 @@ registerRouter.get('/' , (req, res, next)  => {
         }
          transporter.close(); //SMTPの切断
     });
+});
+
+registerRouter.get('/' , (req, res, next)  => {
+    
 });
 
 //エラーハンドル

@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
-const User = Schema({
+let Schema = mongoose.Schema;
+let Users = Schema({
     email: {type:String, required:true, index:true, unique:true},//Email(被りなし変更化)
     uid: {type:String, required:true, index:true, unique:true},//uid(被りなし)
     name: {type:String, index:true},//ユーザーネーム（被りok!）(あとで変更可能)
@@ -27,6 +27,9 @@ const User = Schema({
     ac_gr: {type:Boolean, default:false},//現在accountがグループに所属しているか
     mypage_st: {type:Boolean, default:true},//現在マイページを他人に公開しているか（デフォルトはtrue）(公開)
     cemail: String//変更時に一時的にEメールアドレスを保存
-});
+},{collection: 'user'});
 
-export { User };
+mongoose.Promise = global.Promise;
+Users = mongoose.model("Users", Users);
+
+export = Users ;
