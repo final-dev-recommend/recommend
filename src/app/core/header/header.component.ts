@@ -14,9 +14,6 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class HeaderComponent implements OnInit {
   mobileQuery: MediaQueryList;
 
-  fillerContent = Array(50).fill(0).map(() =>
-      `a`);
-
   private _mobileQueryListener: () => void;
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher){
