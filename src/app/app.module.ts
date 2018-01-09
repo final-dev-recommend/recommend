@@ -11,6 +11,7 @@ import { HomepageComponent } from "./homepage/homepage.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { RecommendComponent } from "./recommend/recommend.component";
+import { MypageComponent } from './mypage/mypage.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { RecommendComponent } from "./recommend/recommend.component";
     LoginComponent,
     RegisterComponent,
     RecommendComponent,
+    MypageComponent,
   ],
   imports: [
     BrowserModule,

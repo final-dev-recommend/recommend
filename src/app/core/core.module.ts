@@ -2,11 +2,13 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from "../shared/shared.module";
 import { HeaderComponent } from './header/header.component';
+import { HttpModule } from "@angular/http";
 
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    HttpModule
   ],
   exports: [
     HeaderComponent

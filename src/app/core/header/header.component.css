@@ -52,7 +52,34 @@
     zoom: 1.3;
   }
   svg{
-    fill: white;
+    fill: rgb(204, 179, 179);
+  }
+  mat-toolbar{
+    position: relative;
+    z-index: 2;
+  }
+  mat-sidenav{
+    background-color:#0b1b49;
+  }
+  mat-nav-list{
+    padding: 0;
+  }
+  mat-nav-list a p{
+    margin: 0;
+    width: 150px;
+    padding: 20px 10px 20px 10px;
+    color: #fff;
+    outline: none;
+    text-align: center;
+  }
+  mat-nav-list a{
+    outline: none;
+  }
+  mat-nav-list a p:hover{
+    background-color: #ffffff3f
+  }
+  .active{
+    background-color: #0b1b49
   }
   @media screen and (max-width:600px) {
     span,button{
