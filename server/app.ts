@@ -8,8 +8,8 @@ import * as mongoose from 'mongoose';
 
 import { getPhash, getHash, getRand, MONGO_URL_REVIEW, MONGO_URL_USER, MONGO_URL_SESSION } from './config';
 
-const ConnectMongoDB = require('connect-mongo')(session);
-const store = new ConnectMongoDB({ //セッション管理用DB接続設定
+var ConnectMongoDB = require('connect-mongo')(session);
+var store = new ConnectMongoDB({ //セッション管理用DB接続設定
   url: MONGO_URL_SESSION,
   ttl: 60 * 60 //1hour
 });
@@ -51,12 +51,12 @@ class App {
     this.express.use(session({
         secret: 'ioukitty',
         store: store,
-        proxy: false,
-        resave: true,
-        saveUninitialized: false,
+        proxy: true,
+        resave: false,
+        saveUninitialized: true,
         cookie: {
-          httpOnly: true,
           secure: false,
+          httpOnly: true,
           maxAge: 60 * 60 * 1000
         }
     }));
@@ -80,11 +80,10 @@ class App {
                   return done(null, false);
               }
               if(account.ac_st != true){//アカウントの登録が済んでいない
-                 console.log("アカウントの作成が済んでいません。");
+                 console.log("アカウントの認証が済んでいません。");
                  return done(null, false);
               }
               req.session.uid = account.uid;
-              req.session.save();
               return done(null, account);
           });
       })

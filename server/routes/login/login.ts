@@ -15,13 +15,6 @@ loginRouter.post('/' , (req, res, next)  => {
 });
 
 loginRouter.get('/' , (req, res, next)  => {
-    let rand = getRand(10);
-    let hash = getHash(rand);
-    let phash = getPhash(rand);
-
-    console.log("rand: " + rand);
-    console.log("hash: " + hash);
-    console.log("phash: " + phash);
     //認証後
     if(req.session.uid){
         console.log('compleat');
@@ -33,7 +26,6 @@ loginRouter.get('/' , (req, res, next)  => {
 //エラーハンドル
 function hadInputdataError(req, res) {
     req.session.error_status = 1;
-    res.redirect('/email_change');
     // mongoose.disconnect();
 }
 
@@ -53,14 +45,12 @@ function hadSendmailError(err, req, res, resp) {
 function hadDbError(err, res, req) {
     //console.log(err);
     req.session.error_status = 6;
-    res.redirect('/email_change');
     // mongoose.disconnect();
 }
 
 function hadRateoverError(err, req, res) {
     //req.session.error_status = 13;
     // res.locals = insert.emailchrateover;
-    res.render('RedirectError');
     // mongoose.disconnect();
 }
 

@@ -8,12 +8,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { HomepageComponent } from "./homepage/homepage.component";
+import { LoginComponent } from "./login/login.component";
+import { RegisterComponent } from "./register/register.component";
 import { RecommendComponent } from "./recommend/recommend.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
+    LoginComponent,
+    RegisterComponent,
     RecommendComponent,
   ],
   imports: [
