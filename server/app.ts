@@ -20,7 +20,6 @@ const LocalStrategy = require('passport-local').Strategy;
 import * as Users   from './models/user';
 
 import { registerRouter } from './routes/register/register';
-import { registerRouter_end } from './routes/register/register_end';
 import { loginRouter } from './routes/login/login';
 
 class App {
@@ -46,13 +45,13 @@ class App {
 
     this.express.use(passport.initialize());
     this.express.use(bodyParser.json());
-    this.express.use(bodyParser.urlencoded({ extended: false }));
+    this.express.use(bodyParser.urlencoded({ extended: true }));
     this.express.use(logger('dev'));//ログ用
     this.express.use(session({
         secret: 'ioukitty',
         store: store,
         proxy: true,
-        resave: false,
+        resave: true,
         saveUninitialized: true,
         cookie: {
           secure: false,
@@ -94,7 +93,6 @@ class App {
     // 静的資産へのルーティング
     this.express.use(express.static(path.join(__dirname, 'public')));
     this.express.use('/api/register',  registerRouter);
-    this.express.use('/api/register_end', registerRouter_end);
     this.express.use('/api/login', loginRouter);
 
     //ミドルウェアを使いつくしたので404を生成 

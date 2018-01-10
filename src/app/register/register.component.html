@@ -1,80 +1,14 @@
-<header>
-    <div class="gnav-btn" [class.is-open]="nav_flag" (click)="nav_state()">
-        <div class="icon-animation">
-        <span class="top"></span>
-        <span class="middle"></span>
-        <span class="bottom"></span>
-        </div>
-    </div>
-    <nav class="global">
-        <ul class="gnav" [class.on]="nav_flag">
-            <li><a href="">ホーム</a></li>
-            <li><a href="">レビュー</a></li>
-            <li><a href="">新規登録</a></li>
-            <li class="login-group">
-                <p class="login-p">ログイン</p>
-                <form>
-                    <span class="input input--uk">
-                    <label class="input__label input__label--uk" for="input-1">
-                        <span class="input__label-content input__label-content--uk">UserID</span>
-                    </label>
-                    <input class="input__field input__field--uk" type="text" id="id" />
-                    </span>
-                    <span class="input input--uk">
-                    <label class="input__label input__label--uk" for="input-1">
-                        <span class="input__label-content input__label-content--uk">Password</span>
-                    </label>
-                    <input class="input__field input__field--uk" type="text" id="passwd" />
-                    </span>
-                    <input type="submit" class="submit_btn" value="ログイン">
-                </form>
-            </li>
-        </ul>
-    </nav>
-</header>
-<section class="top-group">
-        <img src="./assets/main.jpg" alt="メイン画像" class="top-image">
-        <h1 class="top-cap"><img src="./assets/title.svg" alt=""></h1>
-</section>
-<section class="desc">
-    <div class="desc-inner">
-        <div class="list-group">
-            <div class="list-item">
-                <img src="./assets/list_1.jpg" alt="">
-                <div class="list-text">
-                    <p>気になる物や事を、体験する前にある程度理解しておきたい人向けの場を設けたい</p>
-                </div>
-            </div>
-        </div>
-        <div class="list-group">
-            <div class="list-item">
-                <img src="./assets/list_2.jpg" alt="">
-                <div class="list-text">
-                    <p>気になる物や事を、体験する前にある程度理解しておきたい人向けの場を設けたい</p>
-                </div>
-            </div>
-        </div>
-        <div class="list-group">
-            <div class="list-item">
-                <img src="./assets/list_3.jpg" alt="">
-                <div class="list-text">
-                    <p>気になる物や事を、体験する前にある程度理解しておきたい人向けの場を設けたい</p>
-                </div>
-            </div>
-        </div>
+<section class="register">
+    <div class="register-inner">
+        <!-- <form action="http://localhost:3000/api/register" method='post'>
+            <label>Eメール:</label>
+            <input  type="text" name='email' placeholder="email">
+            <input type="submit" name="メールアドレスを送る">
+        </form> -->
+        <form>
+            <label>Eメール:</label>
+            <input  type="text" name='email' placeholder="email">
+            <input type="button" (click)="onSubmit()" value="メールアドレスを送る">
+        </form>
     </div>
 </section>
-<section class="invite">
-    <img class="logo-image" src="./assets/logo.svg" alt="">
-    <div class="invite-text">
-        <h2>こんにちは、けんたです。</h2>
-        <h2>こんにちは、けんたです。</h2>
-        <p>あああああああああああああ</p>
-        <p>テスト文章テスト文章テスト文章</p>
-        <a class="invite-btn">Recommendに登録する</a>
-    </div>
-</section>
-<footer>
-    <p>Copyright (C) 2017- iou-kitty. All Rights Reserved.</p>
-</footer>
-<!-- <div class="modal" [class.on]="nav_flag"></div> -->

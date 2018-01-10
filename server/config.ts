@@ -3,12 +3,12 @@ import * as randomstring from 'randomstring';
 
 //MongoDB接続設定
 export const SERVER_PORT = 3000;
-// export const MONGO_URL_USER = 'mongodb://150.95.148.134:28001/user';
-// export const MONGO_URL_REVIEW ='mongodb://150.95.148.134:28001/review';
-// export const MONGO_URL_SESSION ='mongodb://150.95.148.134:28001/sessiondata';
-export const MONGO_URL_USER = 'mongodb://localhost:28011/user';
-export const MONGO_URL_REVIEW ='mongodb://localhost:28011/review';
-export const MONGO_URL_SESSION ='mongodb://localhost:28011/sessiondata';
+export const MONGO_URL_USER = 'mongodb://150.95.148.134:28001/user';
+export const MONGO_URL_REVIEW ='mongodb://150.95.148.134:28001/review';
+export const MONGO_URL_SESSION ='mongodb://150.95.148.134:28001/sessiondata';
+// export const MONGO_URL_USER = 'mongodb://localhost:28011/user';
+// export const MONGO_URL_REVIEW ='mongodb://localhost:28011/review';
+// export const MONGO_URL_SESSION ='mongodb://localhost:28011/sessiondata';
 
 
 //googleAPIkey

@@ -8,7 +8,7 @@ const loginRouter: Router = Router();
 loginRouter.post('/' , (req, res, next)  => {
     passport.authenticate('local', {
         successRedirect: '/api/login',
-        failureRedirect: '/login.html',
+        failureRedirect: 'http://localhost:4200',
         failureFlash: false,
         session: false
     })(req, res, next);

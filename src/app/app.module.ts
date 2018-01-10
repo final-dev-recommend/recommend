@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MY_ROUTES } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HomepageComponent } from "./homepage/homepage.component";
@@ -28,8 +29,10 @@ import { MypageComponent } from './mypage/mypage.component';
     HttpModule,
     CoreModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MY_ROUTES
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
