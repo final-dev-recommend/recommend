@@ -34,6 +34,15 @@ class App {
   private middleware(): void {
     this.express.set('trust proxy', 1);// プロキシで通信をする
 
+    /**
+    * CORSを許可.
+    */
+    this.express.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
+    });
+
     // 接続する MongoDB の設定
     mongoose.Promise = global.Promise;
     mongoose.connect(process.env.MONGO_URL_USER || MONGO_URL_USER || MONGO_URL_REVIEW, {
@@ -45,7 +54,7 @@ class App {
 
     this.express.use(passport.initialize());
     this.express.use(bodyParser.json());
-    this.express.use(bodyParser.urlencoded({ extended: true }));
+    this.express.use(bodyParser.urlencoded({ extended: false }));
     this.express.use(logger('dev'));//ログ用
     this.express.use(session({
         secret: 'ioukitty',
@@ -59,6 +68,7 @@ class App {
           maxAge: 60 * 60 * 1000
         }
     }));
+
     // ログイン認証
     passport.use(new LocalStrategy({
       usernameField: 'name',

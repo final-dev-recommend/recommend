@@ -1,18 +1,11 @@
 <section class="login">
     <div class="login-inner">
-        <!-- <form action="http://localhost:3000/api/login">
-            <label>ログイン:</label>
-            <input type="text" name="name" size="40" maxlength="32"/><br>
-            <label>パスワード:</label>
-            <input type="password" name="password" size="40" maxlength="32"/>
-            <input type="submit" value="Login" />
-        </form> -->
         <form>
-            <label>ユーザネーム:</label>
-            <input type="text" name="name" size="40" maxlength="32" placeholder="ｎａｍｅ" [(ngModel)]="name"/><br>
-            <label>パスワード:</label>
-            <input type="password" name="password" size="40" maxlength="32" placeholder="password"  [(ngModel)]="password"/>
-            <input type="button" (click)="onSubmit()" value="Login" />
+            <label for="name">ユーザネーム:</label>
+            <input id="name" name="name" type="name" placeholder="name" [(ngModel)]="name"/>
+            <label for="password">パスワード:</label>
+            <input id="password" name="password" type="password" placeholder="password" [(ngModel)]="password"/>
+            <input type="button" (click)="onSubmit()" value="Login"/>
         </form>
     </div>
 </section>

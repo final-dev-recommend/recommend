@@ -4,45 +4,34 @@ import { Http, URLSearchParams, Headers } from '@angular/http';
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  name = '';
-  password = '';
+  name = "";
+  password = "";
 
   constructor(private http:Http){}
 
-    onSubmit(){
-      let ps = new URLSearchParams();
-      ps.set('name', this.name);
-      ps.set('password', this.password);
+  onSubmit(){
 
-      this.http.post('http://localhost:3000/api/login', { name: this.name }, {
-        headers: new Headers({
-          'Content-Type': 'application/x-www-form-urlencoded'
-        })
-      }).subscribe(
-        params => console.log(params),
-        error => console.log(error) 
-      ) ;
+    let params = new URLSearchParams();
+    params.set('name', this.name);
+    params.set('password', this.password);
 
-    //   this.http.get('http://localhost:3000/api/login', {
-    //     params: {name: this.name}
-    //   }).subscribe(
-    //       response => {
-    //         this.result = response.text();
-    //       },
-    //       error => {
-    //         this.result = '通信失敗:${error.statusText}';
-    //       }
-    //   )
-    }
-  nav_flag = false;
-  nav_state(){
-    if(this.nav_flag == false){
-      this.nav_flag = true;
-    }else{
-      this.nav_flag = false;
-    }
+    console.log(this.name);
+    console.log(this.password);
+
+    this.http.post('http://localhost:3000/api/login', params, {
+      headers: new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    }).subscribe(
+      response => {
+        console.log(response)
+      },
+      error => {
+        console.log(error)
+      }
+    );
   }
 }
